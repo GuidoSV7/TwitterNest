@@ -50,12 +50,12 @@ export class TwitterService {
         timeout: 30000
       });
 
-      // Esperar el texto del tweet
+      
       await page.waitForSelector('[data-testid="tweetText"]', {
         timeout: 15000
       });
 
-      // Extraer solo el texto
+ 
       const description = await page.evaluate(() => {
         const tweetElement = document.querySelector('[data-testid="tweetText"]');
         return tweetElement?.textContent?.trim() || '';
@@ -65,10 +65,10 @@ export class TwitterService {
         throw new Error('No se pudo extraer el texto del tweet');
       }
 
-      // Separar en palabras y limpiar espacios/saltos de línea
+     
       const words = description
-        .split(/\s+/) // Dividir por cualquier espacio (incluye saltos de línea)
-        .filter(word => word.length > 0); // Filtrar palabras vacías
+        .split(/\s+/) 
+        .filter(word => word.length > 0); 
 
       this.logger.log(`Extracted ${words.length} words from tweet`);
       return words;
@@ -101,7 +101,7 @@ export class TwitterService {
         timeout: 15000
       });
 
-      // Extraer el texto completo del tweet
+
       const tweetText = await page.evaluate(() => {
         const tweetElement = document.querySelector('[data-testid="tweetText"]');
         return tweetElement?.textContent?.trim() || '';
@@ -111,14 +111,13 @@ export class TwitterService {
         throw new Error('No se pudo extraer el texto del tweet');
       }
 
-      // Validar cada item requerido
       const found: string[] = [];
       const missing: string[] = [];
 
       for (const item of requiredItems) {
         const itemToCheck = item.trim();
         
-        // Buscar el item en el texto (case insensitive)
+
         if (tweetText.toLowerCase().includes(itemToCheck.toLowerCase())) {
           found.push(itemToCheck);
         } else {
